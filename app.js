@@ -1,42 +1,27 @@
-// <⚠️ DONT DELETE THIS ⚠️>
-import "./styles.css";
-const colors = ["#1abc9c", "#3498db", "#9b59b6", "#f39c12", "#e74c3c"];
-// <⚠️ /DONT DELETE THIS ⚠️>
+const loginForm = document.querySelector("#login-form");
+const loginInput = document.querySelector("#login-form Input");
+const greeting = document.querySelector("#greeting");
 
-/*
-✅ The text of the title should change when the mouse is on top of it.
-✅ The text of the title should change when the mouse is leaves it.
-✅ When the window is resized the title should change.
-✅ On right click the title should also change.
-✅ The colors of the title should come from a color from the colors array.
-✅ DO NOT CHANGE .css, or .html files.
-✅ ALL function handlers should be INSIDE of "superEventHandler"
-*/
-const superEventHandler = document.querySelector(".hihihi");
+const HIDDEN_CLASSSNAME = "hidden";
+const USERNAME_KEY = "username";
 
-function handleMouseEnter() {
-  superEventHandler.innerText = "Mouse is here!";
-  superEventHandler.color = "#1abc9c";
+function onLoginSubmit(event) {
+  event.preventDefault();
+  loginForm.classList.add(HIDDEN_CLASSSNAME);
+  const username = loginInput.value;
+  localStorage.setItem(USERNAME_KEY, username);
+  paintGreetings(username);
 }
 
-function handleMouseLeaves() {
-  superEventHandler.innerText = "Mouse is gone!";
-  superEventHandler.color = "#3498db";
+function paintGreetings(username) {
+  greeting.innerText = `Hello ${username}`;
+  greeting.classList.remove(HIDDEN_CLASSSNAME);
 }
 
-function handlewindowResize() {
-  superEventHandler.innerText = "You just resized!";
-  superEventHandler.color = "#9b59b6";
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+if (savedUsername === null) {
+  loginForm.classList.remove(HIDDEN_CLASSSNAME);
+  loginForm.addEventListener("submit", onLoginSubmit);
+} else {
+  paintGreetings(savedUsername);
 }
-
-function handleMouseAuxclick() {
-  superEventHandler.innerText = "That was a right click!";
-  superEventHandler.color = "#1abc9c";
-}
-
-superEventHandler.addEventListener("mouseenter", handleMouseEnter);
-superEventHandler.addEventListener("mouseleave", handleMouseLeaves);
-window.addEventListener("resize", windowResize);
-superEventHandler.addEventListener("auxclick", handleMouseAuxclick);
-
-console.dir(h2);
